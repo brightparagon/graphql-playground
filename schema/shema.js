@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const _ = require('lodash')
+const axios = require('axios')
 
 const {
   GraphQLObjectType,
@@ -7,11 +7,6 @@ const {
   GraphQLInt,
   GraphQLSchema // this takes in root query and returns GraphQL instance
 } = graphql
-
-const users = [
-  { id: '23', firstName: 'Bill', age: 20 },
-  { id: '47', firstName: 'Samantha', age: 21 },
-]
 
 const UserType = new GraphQLObjectType({
   name: 'User',
@@ -31,9 +26,10 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLString } }, // query requires id argument to find an user
       
       // important: this resolve function is the one that actually returns data
-      // second argument args: id above is present on this argument
+      // second argument args: id above(from query) is present on this argument
       resolve(parentValue, args) {
-        return _.find(users, { id: args.id }) // this id will be provided to the query
+        return axios.get(`http://localhost:3000/users/${args.id}`)
+          .then(resp => resp.data) // should send resp.data, not just response for GraphQL to understand
       }
     }
   }
