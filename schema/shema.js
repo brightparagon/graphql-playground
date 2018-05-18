@@ -5,21 +5,29 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema // this takes in root query and returns GraphQL instance
+  GraphQLSchema, // this takes in root query and returns GraphQL instance
+  GraphQLList
 } = graphql
 
 const CompanyType = new GraphQLObjectType({
   name: 'Company',
-  fields: {
+  fields: () => ({ // lazy evaluation for referencing UserType: executed by GraphQL
     id: { type: GraphQLString },
     name: { type: GraphQLString },
-    description: { type: GraphQLString }
-  }
+    description: { type: GraphQLString },
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parentValue, args) {
+        return axios.get(`http://localhost:3000/companies/${parentValue.id}/users`)
+          .then(resp => resp.data)
+      }
+    }
+  })
 })
 
 const UserType = new GraphQLObjectType({
   name: 'User',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     firstName: { type: GraphQLString },
     age: { type: GraphQLInt },
@@ -30,7 +38,7 @@ const UserType = new GraphQLObjectType({
           .then(resp => resp.data)
       }
     }
-  }
+  })
 })
 
 // RootQuery: allows GraphQL enter into database and grab data
