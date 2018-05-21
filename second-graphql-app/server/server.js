@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const models = require('./models');
 const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
@@ -8,7 +9,7 @@ const schema = require('./schema/schema');
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = '';
+const MONGO_URI = process.env.MLAB_MONGODB_URI;
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }
