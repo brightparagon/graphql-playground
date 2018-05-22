@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 // react-apollo works as a glue layer between client side(react) and GraphQL serve
@@ -10,7 +11,11 @@ const client = new ApolloClient({});
 const Root = () => {
   return (
     <ApolloProvider client={client}>
-      <SongList />
+      <HashRouter>
+        <Switch>
+          <Route exact path='/' component={SongList} />
+        </Switch>
+      </HashRouter>
     </ApolloProvider>
   );
 };
