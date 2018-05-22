@@ -1,4 +1,4 @@
-# graphql-test-app
+# graphql-playround
 Test react application to get used to working with GraphQL.
 
 ### The purpose of this repository
