@@ -15,10 +15,8 @@ class SongList extends Component {
     if (this.props.data.loading) return <div>Loading...</div>;
 
     return (
-      <div className='container'>
-        <div>
-          {this.renderSongs()}
-        </div>
+      <div>
+        {this.renderSongs()}
       </div>
     );
   }
