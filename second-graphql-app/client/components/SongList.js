@@ -5,10 +5,32 @@ import { Link } from 'react-router-dom';
 import query from '../queries/fetchSongs';
 
 class SongList extends Component {
+  onSongDelete(id) {
+    const isYes = confirm('Are you sure to delete?');
+    
+    if(isYes) {
+      this.props.mutate({variables: { id }})
+        .then(() => {
+          // why not use refetchQueries in SongCreate? it is possible to use refetchQueries here.
+          // this props.data(song list query) is associated with this SongList component.
+          // in SongCreate song list query is not linked, so then there comes to refetchQueries
+          // more specifically, in SongCreate we cannot use this.props.data.refetch() to
+          // fetch a list of songs
+          this.props.data.refetch();
+        })
+    }
+  }
+
   renderSongs() {
-    return this.props.data.songs.map((song, index) =>
+    return this.props.data.songs.map(({ id, title }, index) =>
       <li key={index} className='collection-item'>
-        {song.title}
+        {title}
+        <i
+          className='material-icons'
+          onClick={() => this.onSongDelete(id)}
+        >
+          delete
+        </i>
       </li>
     );
   }
