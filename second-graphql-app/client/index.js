@@ -10,7 +10,10 @@ import SongDetail from './components/SongDetail';
 import './style/style.css';
 
 const client = new ApolloClient({
-  dataIdFromObject: o => o.id // tells apollo to identify data with id property(every record applied by this config)
+  // tells apollo to identify data with id property(every record applied by this config)
+  // and this isn't necessary to use to update(rerender) with new props
+  // there's another option to get a renewed data: refetchQueries option
+  dataIdFromObject: o => o.id
 });
 
 const Root = () => {
