@@ -9,7 +9,9 @@ import SongCreate from './components/SongCreate';
 import SongDetail from './components/SongDetail';
 import './style/style.css';
 
-const client = new ApolloClient({});
+const client = new ApolloClient({
+  dataIdFromObject: o => o.id // tells apollo to identify data with id property(every record applied by this config)
+});
 
 const Root = () => {
   return (
