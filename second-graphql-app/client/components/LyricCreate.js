@@ -20,7 +20,7 @@ class LyricCreate extends Component {
         songId: this.props.songId
       }
     })
-    .then((data) => {
+    .then(() => {
       this.setState({ content: '' });
     });
   }
@@ -38,6 +38,13 @@ class LyricCreate extends Component {
   }
 }
 
+/**
+ * if no 'likes' in lyrics { ... }, there would be an error
+ * such as "can't access to setState()" or "title of undefined".
+ * if the form of data fetched with graphql query doesn't match
+ * to the previously fetched data, Apollo doesn't give down props correctly.
+ * it seems Apollo is still working on that.
+ */
 const mutation = gql`
   mutation AddLyricToSong($content: String, $songId: ID!) {
     addLyricToSong(content: $content, songId: $songId) {
@@ -45,6 +52,7 @@ const mutation = gql`
       lyrics {
         id
         content
+        likes
       }
     }
   }
