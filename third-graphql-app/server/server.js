@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const models = require('./models');
 const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
