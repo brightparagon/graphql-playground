@@ -42,11 +42,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 
 // Creates a new user account.  We first check to see if a user already exists
 // with this email address to avoid making multiple accounts with identical addresses
-// If it does not, we save the existing user.  After the user is created, it is
+// If it does not, we save the existing user. After the user is created, it is
 // provided to the 'req.logIn' function.  This is apart of Passport JS.
 // Notice the Promise created in the second 'then' statement.  This is done
 // because Passport only supports callbacks, while GraphQL only supports promises
-// for async code!  Awkward!
+// for async code! Awkward!
 function signup({ email, password, req }) {
   const user = new User({ email, password });
   if (!email || !password) { throw new Error('You must provide an email and password.'); }
