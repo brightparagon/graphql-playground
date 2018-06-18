@@ -1,11 +1,15 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Header from './Header';
+import LoginForm from './LoginForm';
 
 const App = (props) => {
   return (
-    <div>
+    <div className='container'>
       <Header />
-      {props.children}
+      <Switch>
+        <Route exact path='/login' component={LoginForm} />    
+      </Switch>
     </div>
   );
 };
