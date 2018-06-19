@@ -16,7 +16,8 @@ class LoginForm extends Component {
     this.props.mutate({
       variables: { email, password },
       refetchQueries: [{ query }]
-    }).catch((res) => {
+    })
+    .catch((res) => {
       const errors = res.graphQLErrors.map(error => error.message);
       this.setState({ errors });
     });
@@ -33,6 +34,14 @@ class LoginForm extends Component {
       </div>
     );
   }
+
+  componentWillUpdate(nextProps) {
+    if (!this.props.data.user && nextProps.data.user) {
+      this.props.history.push('/dashboard');
+    }
+  }
 }
 
-export default graphql(mutation)(LoginForm);
+export default graphql(query)(
+  graphql(mutation)(LoginForm)
+);
